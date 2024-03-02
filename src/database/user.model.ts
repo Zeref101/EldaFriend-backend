@@ -9,6 +9,8 @@ export interface IUser extends Document {
   groups: Schema.Types.ObjectId[];
   medicines: Schema.Types.ObjectId[];
   expenses: Schema.Types.ObjectId[];
+  otp: number;
+  verified: boolean;
 }
 
 const UserSchema = new Schema({
@@ -20,6 +22,8 @@ const UserSchema = new Schema({
   groups: [{ type: Schema.Types.ObjectId, ref: "Group" }],
   medicines: [{ type: Schema.Types.ObjectId, ref: "Medicine" }],
   expenses: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
+  otp: { type: Number },
+  verified: { type: Boolean, required: true },
 });
 
 const User = models.User || model("User", UserSchema);
