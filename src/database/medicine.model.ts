@@ -5,7 +5,7 @@ export interface IMedicine extends Document {
   dosage: string;
   duration: number;
   startDate: Date;
-  isCompleted: [boolean];
+  isCompleted: boolean[];
   scheduledTime: string;
 }
 
