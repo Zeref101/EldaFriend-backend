@@ -11,7 +11,7 @@ const corsOptions = {
 
 app.use(express.json());
 app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+app.options("*", cors(corsOptions)); //? preflight OPTIONS request allow, "*" => respond to OPTIONS requests on any route.
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello from Server");
