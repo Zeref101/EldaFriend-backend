@@ -1,5 +1,6 @@
 import User from "../database/user.model";
 import { connectToDatabase } from "../lib/mongoose";
+import { hashPassword } from "../lib/util";
 import { CreateUserAltResponse, CreateUserParams } from "../types";
 
 export async function createUser({
@@ -28,11 +29,13 @@ export async function createUser({
       }
     }
 
+    const hashedPassword = await hashPassword(password);
+
     const user: any = await User.create({
       fullname: fullname,
       email: email,
       phone: phone,
-      password: password,
+      password: hashedPassword,
     });
 
     if (!user) {
