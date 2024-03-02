@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { createUser } from "../services/Authentication.services";
+import { createUser, verifyOtp } from "../services/Authentication.services";
 import { userSchema } from "../lib/util";
 import parsePhoneNumberFromString from "libphonenumber-js";
 
@@ -9,7 +9,7 @@ router.get("/auth", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Hello from /api/auth" });
 });
 
-router.post("/auth/sign-up", async (req: Request, res: Response) => {
+router.post("/auth/sign-up/getOtp", async (req: Request, res: Response) => {
   try {
     const { fullname, email, phone, password } = req.body;
     const result = userSchema.safeParse(req.body);
@@ -32,7 +32,24 @@ router.post("/auth/sign-up", async (req: Request, res: Response) => {
       console.log("There was an error:", newUser.message);
       res.status(newUser.status).send(newUser.message);
     } else {
-      res.status(200).json({ message: `User created!` });
+      res.status(200).send(newUser);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post("/auth/sign-up/verify-otp", async (req: Request, res: Response) => {
+  try {
+    const { userId, otp } = req.body;
+
+    const result = await verifyOtp({ userId, otp });
+    if ("error" in result) {
+      console.log("There was an error:", result.message);
+      res.status(result.status).send(result.message);
+    } else {
+      res.status(200).json({ message: `User verified!` });
     }
   } catch (error) {
     console.log(error);
