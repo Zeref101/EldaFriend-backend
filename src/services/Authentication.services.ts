@@ -117,13 +117,14 @@ export async function verifyOtp({
     }
 
     if (user.otp !== otp) {
+      await User.deleteOne({ _id: userId });
       return {
         error: true,
         status: 400,
         message: "Invalid OTP",
       };
     }
-
+    user.otp = 0;
     user.verified = true;
     await user.save();
 
