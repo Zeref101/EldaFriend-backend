@@ -4,6 +4,7 @@ import cors from "cors";
 var express = require("express");
 const app = express();
 const authRoutes = require("./routes/userAuthentication");
+const medRoutes = require("./routes/Medicine");
 
 const corsOptions = {
   origin: "",
@@ -19,6 +20,7 @@ app.get("/", (req: Request, res: Response) => {
   res.status(200).send("Hello from Server");
 });
 
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", medRoutes);
 
 app.listen(process.env.SERVER_PORT, () => console.log("Server is listening"));
