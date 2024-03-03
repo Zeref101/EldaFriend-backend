@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
-import { createUser, verifyOtp } from "../services/Authentication.services";
+import { createUser, verifyOtp } from "../services/authentication.services";
 
 import parsePhoneNumberFromString from "libphonenumber-js";
-import { userSchema } from "../validations/userValidation";
+import { userSchema } from "../validations/user.validation";
 
 const router = Router();
 
