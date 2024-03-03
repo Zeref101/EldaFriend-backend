@@ -20,3 +20,12 @@ export interface NewUser {
   medicines?: string[];
   expenses?: string[];
 }
+
+export interface CreateMedicineProp {
+  userId: string;
+  dosageType: string;
+  medName: string;
+  medAmount: number;
+  duration: number;
+  scheduledTime: string;
+}
