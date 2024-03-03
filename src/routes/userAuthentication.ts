@@ -5,11 +5,11 @@ import parsePhoneNumberFromString from "libphonenumber-js";
 
 const router = Router();
 
-router.get("/auth", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Hello from /api/auth" });
 });
 
-router.post("/auth/sign-up/getOtp", async (req: Request, res: Response) => {
+router.post("/sign-up/getOtp", async (req: Request, res: Response) => {
   try {
     const { fullname, email, phone, password } = req.body;
     const result = userSchema.safeParse(req.body);
@@ -40,7 +40,7 @@ router.post("/auth/sign-up/getOtp", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/auth/sign-up/verify-otp", async (req: Request, res: Response) => {
+router.post("/sign-up/verify-otp", async (req: Request, res: Response) => {
   try {
     const { userId, otp } = req.body;
 
