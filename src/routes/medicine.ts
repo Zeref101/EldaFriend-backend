@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
-import { createMedicine } from "../services/Medicine.services";
-import { createMedSchema } from "../validations/medicineValidation";
+import { createMedicine } from "../services/medicine.services";
+import { createMedSchema } from "../validations/medicine.validation";
 
 const router = Router();
 
