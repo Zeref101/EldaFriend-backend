@@ -21,7 +21,7 @@ export interface NewUser {
   expenses?: string[];
 }
 
-export interface CreateMedicineProp {
+export interface GetCreateMedicineProp {
   userId: string;
   dosageType: string;
   medName: string;
@@ -34,4 +34,28 @@ export interface CreateAlternateProp {
   error: boolean;
   status: number;
   message: string;
+}
+
+export interface CreateMedProp {
+  _id?: string;
+  userId?: string;
+  dosageType?: string;
+  medName?: string;
+  medAmount?: number;
+  duration?: number;
+  scheduledTime?: string;
+  error?: boolean;
+  status?: number;
+  message?: string;
+}
+
+export interface ExpenseProp {
+  _id?: string;
+  userId?: string;
+  itemName?: string;
+  itemPrice?: number;
+  createdAt?: Date;
+  error?: boolean;
+  status?: number;
+  message?: string;
 }
