@@ -49,12 +49,44 @@ export interface CreateMedProp {
   message?: string;
 }
 
+export interface GetMedicineProp {
+  _id?: string;
+  userId?: string;
+  name?: string;
+  dosageType?: string;
+  dosageAmount?: number;
+  startDate?: Date;
+  duration?: number;
+  isCompleted?: [boolean];
+  scheduledTime?: string;
+}
+
 export interface ExpenseProp {
   _id?: string;
   userId?: string;
   itemName?: string;
   itemPrice?: number;
   createdAt?: Date;
+  error?: boolean;
+  status?: number;
+  message?: string;
+}
+
+export interface GetPropsForCommunity {
+  adminUserid: string;
+  name: string;
+  description: string;
+  picture: string;
+  banner?: string;
+}
+
+export interface CreateCommunityProp {
+  _id?: string;
+  adminUserid?: string;
+  name?: string;
+  description?: string;
+  picture?: string;
+  banner?: string;
   error?: boolean;
   status?: number;
   message?: string;
