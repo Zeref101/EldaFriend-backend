@@ -29,3 +29,9 @@ export interface CreateMedicineProp {
   duration: number;
   scheduledTime: string;
 }
+
+export interface CreateAlternateProp {
+  error: boolean;
+  status: number;
+  message: string;
+}
