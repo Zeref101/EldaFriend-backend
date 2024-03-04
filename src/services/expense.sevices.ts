@@ -1,11 +1,14 @@
 import Expense from "../database/expense.model";
+import { connectToDatabase } from "../lib/mongoose";
+import { ExpenseProp } from "../types";
 
 export async function addExpense(
   userId: string,
   itemName: string,
   itemPrice: number
-) {
+): Promise<ExpenseProp> {
   try {
+    connectToDatabase();
     const expense = await Expense.create({
       userId,
       itemName,
@@ -20,11 +23,7 @@ export async function addExpense(
         message: `Expense failed to add`,
       };
     } else {
-      return {
-        error: false,
-        status: 200,
-        message: `Expense successfully added`,
-      };
+      return expense;
     }
   } catch (error) {
     console.error(error);
