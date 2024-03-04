@@ -6,7 +6,11 @@ export interface IUser extends Document {
   email: string;
   password: string;
   picture: string;
-  groups: Schema.Types.ObjectId[];
+  globalPin: number;
+  communities: {
+    communityId: Schema.Types.ObjectId;
+    isAdmin: Boolean;
+  }[];
   medicines: Schema.Types.ObjectId[];
   expenses: Schema.Types.ObjectId[];
   otp: number;
@@ -19,7 +23,17 @@ const UserSchema = new Schema({
   email: { type: String, reqired: true, unique: true },
   password: { type: String, reqired: true },
   picture: { type: String },
-  groups: [{ type: Schema.Types.ObjectId, ref: "Group" }],
+  globalPin: { type: Number, required: true },
+  communities: [
+    {
+      communityId: {
+        type: Schema.Types.ObjectId,
+        ref: "Community",
+        required: true,
+      },
+      isAdmin: { type: Boolean, default: false },
+    },
+  ],
   medicines: [{ type: Schema.Types.ObjectId, ref: "Medicine" }],
   expenses: [{ type: Schema.Types.ObjectId, ref: "Expense" }],
   otp: { type: Number },
