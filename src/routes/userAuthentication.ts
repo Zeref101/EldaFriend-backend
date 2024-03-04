@@ -31,9 +31,13 @@ router.post("/sign-up/getOtp", async (req: Request, res: Response) => {
     const newUser = await createUser({ fullname, email, phone, password });
     if ("error" in newUser) {
       console.log("There was an error:", newUser.message);
-      res.status(newUser.status).send(newUser.message);
+      return res.status(newUser.status).send(newUser.message);
     } else {
-      res.status(200).send(newUser);
+      res
+        .status(201)
+        .send(
+          "An OTP has been successfully sent to your registered email address"
+        );
     }
   } catch (error) {
     console.log(error);
