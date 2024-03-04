@@ -107,6 +107,7 @@ export async function verifyOtp({
   otp: number;
 }): Promise<CreateUserParams | CreateUserAltResponse> {
   try {
+    connectToDatabase();
     const user = await User.findById(userId);
     if (!user) {
       return {
@@ -126,9 +127,21 @@ export async function verifyOtp({
     }
     user.otp = 0;
     user.verified = true;
-    await user.save();
-
-    return user;
+    try {
+      await user.save();
+      return {
+        error: false,
+        status: 201,
+        message: "User created successfully",
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        error: true,
+        status: 500,
+        message: "User not created",
+      };
+    }
   } catch (err) {
     console.error(err);
     return {
