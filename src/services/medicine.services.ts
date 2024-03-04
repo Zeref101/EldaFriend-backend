@@ -1,6 +1,6 @@
 import Medicine from "../database/medicine.model";
 import { connectToDatabase } from "../lib/mongoose";
-import { CreateAlternateProp, CreateMedicineProp } from "../types";
+import { CreateMedProp, GetCreateMedicineProp } from "../types";
 
 export async function createMedicine({
   userId,
@@ -9,7 +9,7 @@ export async function createMedicine({
   medName,
   duration,
   scheduledTime,
-}: CreateMedicineProp): Promise<CreateAlternateProp> {
+}: GetCreateMedicineProp): Promise<CreateMedProp> {
   try {
     connectToDatabase();
 
@@ -58,11 +58,7 @@ export async function createMedicine({
       };
     }
 
-    return {
-      error: false,
-      status: 200,
-      message: `Medicine creation successfull`,
-    };
+    return newMedicine;
   } catch (error) {
     console.log(error);
     return {
