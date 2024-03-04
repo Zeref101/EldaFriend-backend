@@ -45,6 +45,10 @@ export async function createUser({
     // ? GENERATING OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
 
+    // ? GENERATING GLOBAL PIN
+
+    const globalPin = Math.floor(1000 + Math.random() * 9000);
+
     const mailOption = {
       from: {
         name: "Shreyas Mohanty",
@@ -62,6 +66,7 @@ export async function createUser({
       password: hashedPassword,
       otp: otp,
       verified: false,
+      globalPin: globalPin,
     });
     transporter.sendMail(mailOption, (error, info) => {
       if (error) {
