@@ -65,19 +65,18 @@ bun run index.ts
 
 - If Phone number already exists
 
-````json
+```json
 {
   "message": "Phone number already exists"
 }
+```
 
 - If User is not added to the database due to internal server error
 
 ```json
 {
-  "message": "User not created due to an Internal server error",
-
+  "message": "User not created due to an Internal server error"
 }
-
 ```
 
 - If OTP generated successfully
@@ -86,7 +85,7 @@ bun run index.ts
 {
   "message": "An OTP has been successfully sent to your registered email address"
 }
-````
+```
 
 ### POST /api/auth/sign-up/verify-otp
 
