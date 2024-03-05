@@ -24,10 +24,14 @@ router.post("/create", async (req: Request, res: Response) => {
     });
 
     if (!newCommunity) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "Failed to create community. Please check your input data.",
       });
     }
+
+    return res.status(201).json({
+      message: "Community created successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
