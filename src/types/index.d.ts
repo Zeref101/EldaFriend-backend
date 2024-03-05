@@ -1,8 +1,32 @@
+import { ObjectId } from "mongoose";
+
 export interface CreateUserParams {
   fullname: string;
   email: string;
   phone: string;
   password: string;
+}
+
+export interface GetUserProp {
+  fullname: string;
+  phone: string;
+  email: string;
+  password: string;
+  picture: string;
+  globalPin: number;
+  communities: {
+    communityId: ObjectId;
+    isAdmin: boolean;
+  }[];
+  medicines: ObjectId[];
+  expenses: ObjectId[];
+  otp: number;
+  verified: boolean;
+}
+export interface Error {
+  error: boolean;
+  status: number;
+  message: string;
 }
 export interface CreateUserAltResponse {
   error: boolean;
