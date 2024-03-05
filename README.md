@@ -18,7 +18,7 @@ bun install
 To run:
 
 ```bash
-bun run index.ts
+bun run dev
 ```
 
 ### <a id="auth" ></a>User Authentication
