@@ -3,10 +3,11 @@
 - Backend for Eldafriend app, A pal for the elder community! Track your medication, along with reminders and many showstopper features that ensure completely homely care.
 
 End-Points:
-[User Authentication endpoints](#auth)
-[Medicine endpoints](#meds)
-[Community endpoints](#community)
-[Expense endpoints](#expense)
+
+- [User Authentication endpoints](#auth)
+- [Medicine endpoints](#meds)
+- [Community endpoints](#community)
+- [Expense endpoints](#expense)
 
 To install dependencies:
 
@@ -186,7 +187,7 @@ bun run index.ts
 
 ### <a id="#meds" ></a>Medicines
 
-### POST /create-med
+### POST /api/user/create-med
 
 **Creates a new medicine for a user.**
 
@@ -225,7 +226,7 @@ bun run index.ts
 }
 ```
 
-### PATCH /med-taken
+### PATCH /api/user/med-taken
 
 **Updates the status of a medicine as taken.**
 
@@ -258,7 +259,7 @@ bun run index.ts
 
 ### <a id="#community"></a>User Community
 
-### POST /create
+### POST /api/community/create
 
 **Creates a new community.**
 
@@ -306,7 +307,7 @@ bun run index.ts
 
 - HTTP status codes: 201 for success, 400 for bad request, 500 for internal server error.
 
-### GET /get-community
+### GET /api/community/get-community
 
 **Fetches all communities.**
 
@@ -332,7 +333,7 @@ _None required_
 
 ### <a id="#expense"></a>Expense
 
-### POST /add-expense
+### POST /api/user/add-expense
 
 **Adds a new expense for a user.**
 
