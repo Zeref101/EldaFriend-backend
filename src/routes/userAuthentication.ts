@@ -37,11 +37,11 @@ router.post("/sign-up/getOtp", async (req: Request, res: Response) => {
       console.log("There was an error:", newUser.message);
       return res.status(newUser.status).send(newUser.message);
     } else {
-      res
-        .status(201)
-        .send(
-          "An OTP has been successfully sent to your registered email address"
-        );
+      return res.status(201).json({
+        userId: newUser._id,
+        message:
+          "An OTP has been successfully sent to your registered email address",
+      });
     }
   } catch (error) {
     console.log(error);
