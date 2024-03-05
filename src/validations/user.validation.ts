@@ -7,3 +7,8 @@ export const userSchema = z.object({
     .string()
     .min(2, { message: "Password must be at least 2 character long" }),
 });
+
+export const userLoginSchema = z.object({
+  email: z.string().email({ message: "Email address is missing" }),
+  password: z.string().min(2, { message: "Password is missing" }),
+});
