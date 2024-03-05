@@ -84,6 +84,7 @@ bun run dev
 
 ```json
 {
+  "userId": "ufiabifahbigubapigbiua",
   "message": "An OTP has been successfully sent to your registered email address"
 }
 ```
