@@ -1,8 +1,14 @@
 import User from "../database/user.model";
 import { connectToDatabase } from "../lib/mongoose";
 import { hashPassword } from "../lib/util";
-import { CreateUserAltResponse, CreateUserParams } from "../types";
+import {
+  CreateUserAltResponse,
+  CreateUserParams,
+  Error,
+  GetUserProp,
+} from "../types";
 import nodemailer from "nodemailer";
+import bcrypt from "bcrypt";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -149,6 +155,42 @@ export async function verifyOtp({
     }
   } catch (err) {
     console.error(err);
+    return {
+      error: true,
+      status: 500,
+      message: "Internal server error",
+    };
+  }
+}
+
+export async function getUser(
+  email: string,
+  password: string
+): Promise<GetUserProp | Error> {
+  try {
+    connectToDatabase();
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return {
+        error: true,
+        status: 400,
+        message: "User not found",
+      };
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return {
+        error: true,
+        status: 400,
+        message: "Invalid password",
+      };
+    }
+
+    return user;
+  } catch (error) {
+    console.error(error);
     return {
       error: true,
       status: 500,
