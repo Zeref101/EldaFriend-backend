@@ -1,8 +1,12 @@
 import { Request, Response, Router } from "express";
-import { createUser, verifyOtp } from "../services/authentication.services";
+import {
+  createUser,
+  getUser,
+  verifyOtp,
+} from "../services/authentication.services";
 
 import parsePhoneNumberFromString from "libphonenumber-js";
-import { userSchema } from "../validations/user.validation";
+import { userLoginSchema, userSchema } from "../validations/user.validation";
 
 const router = Router();
 
@@ -59,6 +63,28 @@ router.post("/sign-up/verify-otp", async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/login", async (req: Request, res: Response) => {
+  try {
+    const result = userLoginSchema.safeParse(req.body);
+    if (result.success) {
+      const { email, password } = result.data;
+      const user = await getUser(email, password);
+
+      if (!user) {
+        return res.status(400).send("User not found");
+      }
+
+      if ("error" in user) {
+        return res.status(user.status).send(user.message);
+      }
+
+      return res.status(200).send(user);
+    }
+  } catch (error) {
+    console.log(error);
   }
 });
 module.exports = router;
