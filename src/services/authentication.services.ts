@@ -4,6 +4,7 @@ import { hashPassword } from "../lib/util";
 import {
   CreateUserAltResponse,
   CreateUserParams,
+  CreateUserResponse,
   Error,
   GetUserProp,
 } from "../types";
@@ -25,7 +26,7 @@ export async function createUser({
   email,
   phone,
   password,
-}: CreateUserParams): Promise<CreateUserParams | CreateUserAltResponse> {
+}: CreateUserParams): Promise<CreateUserResponse | CreateUserAltResponse> {
   try {
     connectToDatabase();
 
