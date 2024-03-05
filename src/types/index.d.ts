@@ -6,6 +6,9 @@ export interface CreateUserParams {
   phone: string;
   password: string;
 }
+export interface CreateUserResponse {
+  _id: string;
+}
 
 export interface GetUserProp {
   fullname: string;
