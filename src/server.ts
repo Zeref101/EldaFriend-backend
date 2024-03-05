@@ -6,9 +6,10 @@ const app = express();
 const authRoutes = require("./routes/userAuthentication");
 const medRoutes = require("./routes/medicine");
 const expenseRotues = require("./routes/expense");
+const communityRoutes = require("./routes/community");
 
 const corsOptions = {
-  origin: "",
+  origin: "*",
   methods: "GET, POST, PATCH, PUT, HEAD, DELETE",
   credential: true,
 };
@@ -24,5 +25,6 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/user", medRoutes);
 app.use("/api/user", expenseRotues);
+app.use("/api/community", communityRoutes);
 
 app.listen(process.env.SERVER_PORT, () => console.log("Server is listening"));
