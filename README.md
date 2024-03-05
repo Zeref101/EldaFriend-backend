@@ -21,7 +21,7 @@ To run:
 bun run index.ts
 ```
 
-### <a id="#auth" ></a>User Authentication
+### <a id="auth" ></a>User Authentication
 
 ### GET /api/auth
 
@@ -185,7 +185,7 @@ bun run index.ts
 }
 ```
 
-### <a id="#meds" ></a>Medicines
+### <a id="meds" ></a>Medicines
 
 ### POST /api/user/create-med
 
@@ -257,7 +257,7 @@ bun run index.ts
 
 - HTTP Status Code: 204 No Content
 
-### <a id="#community"></a>User Community
+### <a id="community"></a>User Community
 
 ### POST /api/community/create
 
@@ -331,7 +331,7 @@ _None required_
 ]
 ```
 
-### <a id="#expense"></a>Expense
+### <a id="expense"></a>Expense
 
 ### POST /api/user/add-expense
 
