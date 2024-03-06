@@ -1,6 +1,13 @@
 import Medicine, { IMedicine } from "../database/medicine.model";
 import { connectToDatabase } from "../lib/mongoose";
-import { CreateMedProp, GetCreateMedicineProp } from "../types";
+import {
+  CreateMedProp,
+  Error,
+  GetAllMedsProp,
+  GetCreateMedicineProp,
+  GetMedicineProp,
+  UpdateIsCompletedProp,
+} from "../types";
 const { differenceInDays } = require("date-fns");
 
 export async function createMedicine({
@@ -70,14 +77,6 @@ export async function createMedicine({
   }
 }
 
-interface UpdateIsCompletedProp {
-  userId: string;
-  medicineId: string;
-  setTrueForDate: Date;
-  setTrue: boolean;
-}
-type GetMedicineProp = IMedicine & Document;
-
 export async function updateIsCompleted({
   userId,
   medicineId,
@@ -131,6 +130,35 @@ export async function updateIsCompleted({
       error: true,
       status: 500,
       message: `Internal Server Error`,
+    };
+  }
+}
+
+export async function getAllMedicines(
+  userId: string
+): Promise<GetAllMedsProp[] | Error> {
+  try {
+    connectToDatabase();
+
+    const meds = await Medicine.find({ userId }).select(
+      "name dosageType dosageAmount scheduledTime"
+    );
+
+    if (!meds) {
+      return {
+        error: true,
+        status: 400,
+        message: "Medicines not found",
+      };
+    }
+
+    return meds;
+  } catch (error) {
+    console.log(error);
+    return {
+      error: true,
+      status: 500,
+      message: "Internal Server Error while fetching medicines",
     };
   }
 }
