@@ -1,4 +1,5 @@
 import { ObjectId } from "mongoose";
+import { IMedicine } from "../database/medicine.model";
 
 export interface CreateUserParams {
   fullname: string;
@@ -56,6 +57,19 @@ export interface GetCreateMedicineProp {
   duration: number;
   scheduledTime: string;
 }
+export interface GetAllMedsProp {
+  name: string;
+  dosageType: string;
+  dosageAmount: number;
+  scheduledTime: string;
+}
+export interface UpdateIsCompletedProp {
+  userId: string;
+  medicineId: string;
+  setTrueForDate: Date;
+  setTrue: boolean;
+}
+export type GetMedicineProp = IMedicine & Document;
 
 export interface CreateAlternateProp {
   error: boolean;
@@ -76,17 +90,17 @@ export interface CreateMedProp {
   message?: string;
 }
 
-export interface GetMedicineProp {
-  _id?: string;
-  userId?: string;
-  name?: string;
-  dosageType?: string;
-  dosageAmount?: number;
-  startDate?: Date;
-  duration?: number;
-  isCompleted?: [boolean];
-  scheduledTime?: string;
-}
+// export interface GetMedicineProp {
+//   _id?: string;
+//   userId?: string;
+//   name?: string;
+//   dosageType?: string;
+//   dosageAmount?: number;
+//   startDate?: Date;
+//   duration?: number;
+//   isCompleted?: [boolean];
+//   scheduledTime?: string;
+// }
 
 export interface ExpenseProp {
   _id?: string;
