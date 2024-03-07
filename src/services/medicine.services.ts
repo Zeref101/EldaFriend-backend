@@ -7,6 +7,7 @@ import {
   GetCreateMedicineProp,
   GetMedicineProp,
   UpdateIsCompletedProp,
+  UserWithMedNameProp,
 } from "../types";
 const { differenceInDays } = require("date-fns");
 
@@ -159,6 +160,66 @@ export async function getAllMedicines(
       error: true,
       status: 500,
       message: "Internal Server Error while fetching medicines",
+    };
+  }
+}
+
+export async function getUserMedicineNames(
+  userId: string
+): Promise<GetAllMedsProp[] | Error> {
+  try {
+    if (!userId) {
+      return {
+        error: true,
+        status: 400,
+        message: "Invalid user ID",
+      };
+    }
+    connectToDatabase();
+
+    const meds = await Medicine.find({ userId }).select("name");
+
+    if (!meds) {
+      return {
+        error: true,
+        status: 400,
+        message: "Medicines not found",
+      };
+    } else if (meds.length > 0) {
+      const medNames = meds.map((medicine) => medicine.name);
+      return medNames;
+    }
+    return [];
+  } catch (error) {
+    console.log(error);
+    return {
+      error: true,
+      status: 500,
+      message: "Internal Server Error while fetching medicines",
+    };
+  }
+}
+
+export async function getAllUsersWithMedName(
+  medName: string
+): Promise<UserWithMedNameProp[] | Error> {
+  try {
+    connectToDatabase();
+
+    const users = await Medicine.find({ name: medName }).select("userId");
+
+    if (users.length > 0) {
+      const userid = users.map((user) => user.userId);
+      return userid;
+    }
+
+    return [];
+  } catch (error) {
+    console.log(error);
+    return {
+      error: true,
+      status: 500,
+      message: "Internal Server Error",
     };
   }
 }
