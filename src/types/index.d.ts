@@ -132,3 +132,11 @@ export interface CreateCommunityProp {
   status?: number;
   message?: string;
 }
+export interface GetSimilarUsersProp {
+  fullname: string;
+  phone: string;
+  email: string;
+}
+export interface UserWithMedNameProp {
+  userId: string;
+}
