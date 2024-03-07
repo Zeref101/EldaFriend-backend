@@ -8,6 +8,7 @@ End-Points:
 - [Medicine endpoints](#meds)
 - [Community endpoints](#community)
 - [Expense endpoints](#expense)
+- [User functionalities](#user)
 
 To install dependencies:
 
@@ -395,3 +396,42 @@ _Content-Type: application/json_
 ```
 
 - HTTP status codes: 201 for success, 400 for bad request, 404 for not found, 500 for internal server error.
+
+### <a id="user"></a>User Functionalities
+
+### GET /api/user/get-similar-users/:medicine_name
+
+**Fetches a list of users who are associated with a specific medicine.**
+
+#### Parameters
+
+- `medicine_name`: The name of the medicine. This is a path parameter.
+
+#### Responses
+
+- `200 OK`: The request was successful. The response body contains an array of users who are associated with the specified medicine. Each user object includes the user's full name, phone number, and email address.
+
+- `400 Bad Request`: The request was unsuccessful because the `medicine_name` parameter was not provided. The response body contains a message explaining the error.
+
+- `500 Internal Server Error`: The request was unsuccessful due to an unexpected error on the server. The response body contains a message explaining the error.
+
+#### Request:
+
+_Empty_
+
+#### Response:
+
+```json
+[
+  {
+    "fullname": "John Doe",
+    "phone": "123-456-7890",
+    "email": "johndoe@example.com"
+  },
+  {
+    "fullname": "Jane Doe",
+    "phone": "098-765-4321",
+    "email": "janedoe@example.com"
+  }
+]
+```
