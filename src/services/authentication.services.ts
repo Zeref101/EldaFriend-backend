@@ -10,6 +10,7 @@ import {
 } from "../types";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
+import tempUser from "../database/tempUser.model";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -52,10 +53,6 @@ export async function createUser({
     // ? GENERATING OTP
     const otp = Math.floor(100000 + Math.random() * 900000);
 
-    // ? GENERATING GLOBAL PIN
-
-    const globalPin = Math.floor(1000 + Math.random() * 9000);
-
     const mailOption = {
       from: {
         name: "Shreyas Mohanty",
@@ -66,15 +63,23 @@ export async function createUser({
       text: "Your OTP is: " + otp,
     };
 
-    const user: any = await User.create({
+    const user = await tempUser.create({
       fullname: fullname,
       email: email,
       phone: phone,
       password: hashedPassword,
       otp: otp,
-      verified: false,
-      globalPin: globalPin,
     });
+
+    // const user: any = await User.create({
+    //   fullname: fullname,
+    //   email: email,
+    //   phone: phone,
+    //   password: hashedPassword,
+    //   otp: otp,
+    //   verified: false,
+    //   globalPin: globalPin,
+    // });
     transporter.sendMail(mailOption, (error, info) => {
       if (error) {
         console.log({
@@ -120,8 +125,11 @@ export async function verifyOtp({
 }): Promise<CreateUserParams | CreateUserAltResponse> {
   try {
     connectToDatabase();
-    const user = await User.findById(userId);
-    if (!user) {
+    // ? GENERATING GLOBAL PIN
+    const globalPin = Math.floor(1000 + Math.random() * 9000);
+
+    const tempuser = await tempUser.findById(userId);
+    if (!tempuser) {
       return {
         error: true,
         status: 404,
@@ -129,31 +137,32 @@ export async function verifyOtp({
       };
     }
 
-    if (user.otp !== otp) {
-      await User.deleteOne({ _id: userId });
+    if (tempuser.otp !== otp) {
+      await tempUser.deleteOne({ _id: userId });
       return {
         error: true,
         status: 400,
         message: "Invalid OTP",
       };
     }
-    user.otp = 0;
-    user.verified = true;
-    try {
-      await user.save();
-      return {
-        error: false,
-        status: 201,
-        message: "User created successfully",
-      };
-    } catch (error) {
-      console.log(error);
-      return {
-        error: true,
-        status: 500,
-        message: "User not created",
-      };
-    }
+
+    const newUser = await User.create({
+      fullname: tempuser.fullname,
+      email: tempuser.email,
+      phone: tempuser.phone,
+      password: tempuser.password,
+      otp: 0,
+      verified: true,
+      globalPin: globalPin,
+    });
+
+    await tempUser.deleteOne({ _id: userId });
+
+    return {
+      error: false,
+      status: 201,
+      message: "User created successfully",
+    };
   } catch (err) {
     console.error(err);
     return {
