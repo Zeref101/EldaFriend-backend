@@ -90,6 +90,8 @@ bun run dev
 }
 ```
 
+- HTTP status codes: 201 for success, 400 for bad request, 404 for not found, 500 for internal server error.
+
 ### POST /api/auth/sign-up/verify-otp
 
 **Verifies the OTP sent to the user's email.**
@@ -108,6 +110,14 @@ bun run dev
 ```
 
 #### Sample Response:
+
+- Successful creation
+
+```json
+{
+  "message": "User created successfully"
+}
+```
 
 - Error while verifying the OTP
 
@@ -132,6 +142,8 @@ bun run dev
   "message": "User verified!"
 }
 ```
+
+- HTTP status codes: 201 for success, 400 for bad request, 404 for not found, 500 for internal server error.
 
 ### POST /api/auth/login
 
@@ -228,6 +240,8 @@ bun run dev
 }
 ```
 
+- HTTP status codes: 201 for success, 400 for bad request, 404 for not found, 500 for internal server error.
+
 ### PATCH /api/user/med-taken
 
 **Updates the status of a medicine as taken.**
@@ -287,7 +301,7 @@ bun run dev
 
 ```json
 {
-  "message": "Community created successfully"
+  "message": `Community created and Admin status is updated`
 }
 ```
 
