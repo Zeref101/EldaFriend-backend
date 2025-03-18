@@ -6,17 +6,21 @@ import mongoose from "mongoose";
 export async function connectToDatabase() {
   mongoose.set("strictQuery", true);
 
-  if (!process.env.MONGODB_URL) {
-    return console.log("MISSING MONGODB_URL");
+  const { MONGODB_URL, DB_NAME } = process.env;
+
+  if (!MONGODB_URL || !DB_NAME) {
+    console.log("MISSING MONGODB_URL or DB_NAME");
+    return;
   }
+
   try {
-    await mongoose.connect(
-      "mongodb+srv://zeref101:mongopassword@cluster0.ic2cbjb.mongodb.net/",
-      {
-        dbName: "EldaFriend",
-      }
-    );
+    await mongoose.connect(MONGODB_URL, {
+      dbName: DB_NAME,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("Connected to MongoDB successfully");
   } catch (error) {
-    console.log(error);
+    console.error("Failed to connect to MongoDB:", error);
   }
 }
